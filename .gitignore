@@ -1,5 +1,10 @@
+eml-hdr-extract
+
+dist/
+
 # Removing Vendor
 vendor/
+testdata/remote
 
 .vscode/
 

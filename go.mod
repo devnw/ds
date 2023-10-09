@@ -1,3 +1,3 @@
-module go.devnw.com/template
+module go.devnw.com/ds
 
-go 1.20
+go 1.21
