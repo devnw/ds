@@ -36,6 +36,10 @@ func (n *Node[T]) Value() T {
 	return n.value
 }
 
+func (n *Node[T]) Set(v T) {
+	n.value = v
+}
+
 // Parent returns the parent of the node.
 func (n *Node[T]) Parent() *Node[T] {
 	return n.parent
@@ -49,6 +53,10 @@ func (n *Node[T]) Children() []*Node[T] {
 // AddChild adds a child to the node.
 func (n *Node[T]) AddChildren(c ...*Node[T]) {
 	for _, child := range c {
+		if child == nil {
+			continue
+		}
+
 		child.parent = n
 		n.children = append(n.children, child)
 	}
