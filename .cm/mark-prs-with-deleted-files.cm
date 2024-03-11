@@ -7,7 +7,7 @@ automations:
   deleted:
     if:
       - {{ has.deleted_files }}
-    run: 
+    run:
       - action: add-label@v1
         args:
           label: 'deleted-files'

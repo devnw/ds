@@ -5,7 +5,7 @@ manifest:
 
 automations:
   the_right_reviewer:
-    if: 
+    if:
       - true
     run:
       - action: add-comment@v1

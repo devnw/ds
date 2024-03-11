@@ -1,44 +1,12 @@
-name: Build & Test
+name: Lint, Build & Test
 
-# this is triggered on push to the repository
 on: [push, pull_request]
 
+env:
+  GH_ACCESS_TOKEN: ${{ secrets.GH_PAT }}
+
 jobs:
-  build:
-    name: "Build"
-    strategy:
-      matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
-      fail-fast: true
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - name: Install Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 1.21.x
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Build
-        run: go build ./...
-  test:
-    name: "Unit Tests"
-    needs: [build]
-    strategy:
-      matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
-      fail-fast: true
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Install Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 1.21.x
-      - name: Test
-        run: go test -failfast ./... -race -coverprofile=coverage.txt -covermode=atomic
-      - name: Push Coverage to codecov.io
-        uses: codecov/codecov-action@v4.0.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.txt
+  lint-build-test:
+    name: Lint, Build & Test
+    uses: devnw/workflows/.github/workflows/make-build-nix.yml@main
+    secrets: inherit # pragma: allowlist secret
