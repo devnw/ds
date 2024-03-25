@@ -650,3 +650,61 @@ func Test_Cursor_Prepend(t *testing.T) {
 		})
 	}
 }
+
+func Test_Cursor_Skip(t *testing.T) {
+	tests := []struct {
+		data []int
+		pos  int
+		skip int
+		want []int
+		err  error
+	}{
+		{
+			[]int{1, 2, 3, 4, 5}, 0, 3,
+			[]int{4, 5},
+			nil,
+		},
+		{
+			[]int{1, 2, 3, 4, 5}, 1, 3,
+			[]int{5},
+			nil,
+		},
+		{
+			[]int{1, 2, 3, 4, 5}, 2, 3,
+			[]int{},
+			ErrIndexOutOfRange,
+		},
+		{
+			[]int{1, 2, 3, 4, 5}, 3, 3,
+			[]int{},
+			ErrIndexOutOfRange,
+		},
+		{
+			[]int{1, 2, 3, 4, 5}, 4, 3,
+			[]int{},
+			ErrIndexOutOfRange,
+		},
+		{
+			[]int{1, 2, 3, 4, 5}, 5, 3,
+			[]int{},
+			ErrIndexOutOfRange,
+		},
+	}
+
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("test_%v", i), func(t *testing.T) {
+			c := New(tt.data)
+			c.pos = tt.pos
+
+			got, err := c.Skip(tt.skip)
+			if err != tt.err {
+				t.Fatalf("expected %v, got %v", tt.err, err)
+			}
+
+			diff := cmp.Diff(got.buff, tt.want)
+			if diff != "" {
+				t.Fatalf(diff)
+			}
+		})
+	}
+}

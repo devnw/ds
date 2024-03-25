@@ -147,6 +147,14 @@ func (c *Cursor[T]) Set(v T) {
 	}
 }
 
+func (c *Cursor[T]) Skip(i int) (*Cursor[T], error) {
+	if c.isValidPOS(c.pos + i) {
+		return New(c.buff[c.pos+i:]), nil
+	}
+
+	return New[T](nil), ErrIndexOutOfRange
+}
+
 // Take takes the next X from the cursor if they exist, or returns an error
 // if there are not enough elements
 func (c *Cursor[T]) Take(i int) ([]T, *Cursor[T], error) {
