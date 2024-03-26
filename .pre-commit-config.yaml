@@ -19,7 +19,7 @@ repos:
           - '--baseline'
           - '.secrets.baseline'
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 3.0.0a6
+    rev: 3.0.3
     hooks:
       - id: sqlfluff-fix
   - repo: https://github.com/syntaqx/git-hooks
@@ -29,7 +29,7 @@ repos:
       - id: shellcheck
       - id: shfmt
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v3.18.2
+    rev: v3.20.0
     hooks:
       - id: commitizen
   - repo: https://github.com/pre-commit/pre-commit-hooks

@@ -156,8 +156,10 @@ func (c *Cursor[T]) Skip(i int) (*Cursor[T], error) {
 }
 
 // Rem returns the remaining elements of the cursor as a slice
-func (c *Cursor[T]) Rem() *Cursor[T] {
-	return New(c.buff[c.pos:])
+func (c *Cursor[T]) Rem() []T {
+	out := make([]T, len(c.buff)-c.pos)
+	copy(out, c.buff[c.pos:])
+	return out
 }
 
 // Take takes the next X from the cursor if they exist, or returns an error
