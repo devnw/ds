@@ -155,6 +155,11 @@ func (c *Cursor[T]) Skip(i int) (*Cursor[T], error) {
 	return New[T](nil), ErrIndexOutOfRange
 }
 
+// Rem returns the remaining elements of the cursor as a slice
+func (c *Cursor[T]) Rem() *Cursor[T] {
+	return New(c.buff[c.pos:])
+}
+
 // Take takes the next X from the cursor if they exist, or returns an error
 // if there are not enough elements
 func (c *Cursor[T]) Take(i int) ([]T, *Cursor[T], error) {
